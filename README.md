@@ -22,11 +22,12 @@ This project performs time series forecasting on monthly revenue data using Pyth
 
 # Project Structure
 
-/data              → raw & cleaned datasets
-/notebooks         → Jupyter notebooks
-/models            → saved forecasting models
-/visuals           → charts & plots
+/data        → raw & cleaned datasets  
+/notebooks   → Jupyter notebooks  
+/models      → saved forecasting models  
+/visuals     → charts & plots  
 README.md
+
 
 # Example Forecast Plot
 
