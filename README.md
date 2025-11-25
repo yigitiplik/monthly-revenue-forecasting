@@ -47,36 +47,37 @@ monthly-revenue-forecasting/
 The dataset contains monthly U.S. retail sales with multiple business categories.
 For this project, we extract:
 
-➡️ Retail Sales, Total (Seasonally Adjusted)
+## Retail Sales, Total (Seasonally Adjusted)
 
 because it provides:
 
-Complete data from 1992–2024
-
-Strong trend + seasonality (ideal for SARIMA)
-
-Reliable signal for long-term forecasting
+* Complete data from 1992–2024
+* Strong trend + seasonality (ideal for SARIMA)
+* Reliable signal for long-term forecasting
 
 Key columns:
 
-Column	Description
-month	Monthly timestamp (YYYY-MM)
-kind_of_business	Retail category
-value	Total monthly sales (Millions USD)
-🚀 Project Workflow
-1. Load & Clean Data
+|Column	            |Description|
+|-------------------|------------------------------------|
+|month	            |Monthly timestamp (YYYY-MM)         |
+|kind_of_business   |Retail category                     |
+|value	            |Total monthly sales (Millions USD)  |
 
-Imported CSV from data/raw/
+---
 
-Filtered to "Retail sales, total"
+# Project Workflow
+## 1. Load & Clean Data
 
-Converted month column into datetime
+* Imported CSV from data/raw/
+* Filtered to "Retail sales, total"
+* Converted month column into datetime
 
 Enforced monthly frequency:
-
+'''
 ts = df_total.set_index("month").asfreq("MS")
+'''
 
-2. Exploratory Time-Series Analysis
+## 2. Exploratory Time-Series Analysis
 
 Raw trend visualization
 
