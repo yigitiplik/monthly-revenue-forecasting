@@ -177,7 +177,9 @@ forecast_mean = future.predicted_mean
 
 This is a critical component of production-ready pipelines.
 
-📈 Results Summary
+---
+
+# Results Summary
 
 * Strong upward trend in U.S. retail spending
 * Clear annual seasonality
@@ -186,9 +188,10 @@ This is a critical component of production-ready pipelines.
 * Ready for downstream reporting & BI dashboards
 
 Final output figure:
-
-📍 visuals/monthly_retail_sarima_forecast.png
-
+```
+visuals/monthly_retail_sarima_forecast.png
+```
+---
 # Business Value
 
 This forecasting pipeline helps organizations:
@@ -199,7 +202,7 @@ This forecasting pipeline helps organizations:
 * Build data-driven financial strategies
 * Detect outliers & structural changes in consumer behavior
 
-🛠️ Technologies Used
+# Technologies Used
 
 * Python
 * Pandas
@@ -208,7 +211,7 @@ This forecasting pipeline helps organizations:
 * NumPy
 * Joblib
 
-🧠 Future Improvements
+# Future Improvements
 
 * Include exogenous variables (multivariate model)
 * Compare with Prophet, ETS, and LSTM
