@@ -73,9 +73,9 @@ Key columns:
 * Converted month column into datetime
 
 Enforced monthly frequency:
-'''
+```
 ts = df_total.set_index("month").asfreq("MS")
-'''
+```
 
 ## 2. Exploratory Time-Series Analysis
 
