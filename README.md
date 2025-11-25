@@ -21,7 +21,7 @@ This project is built end-to-end in Python, following real-world best practices 
 
 # Project Structure
 
-'''
+'''text
 monthly-revenue-forecasting/
 │
 ├── data/
