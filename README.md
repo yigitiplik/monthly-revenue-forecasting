@@ -79,43 +79,38 @@ ts = df_total.set_index("month").asfreq("MS")
 
 ## 2. Exploratory Time-Series Analysis
 
-Raw trend visualization
+* Raw trend visualization
+* Checked for seasonal cycles
+* Identified structural breaks (e.g., COVID-19)
 
-Checked for seasonal cycles
-
-Identified structural breaks (e.g., COVID-19)
-
-3. STL Decomposition (Trend + Seasonality + Residual)
+## 3. STL Decomposition (Trend + Seasonality + Residual)
 
 We used STL to separate components:
 
-Long-term economic trend
+* Long-term economic trend
+* Strong yearly seasonality (12-month cycle)
+* Irregular noise spikes (especially 2020)
 
-Strong yearly seasonality (12-month cycle)
-
-Irregular noise spikes (especially 2020)
-
-4. Stationarity Check (ADF Test)
+## 4. Stationarity Check (ADF Test)
 
 ADF p-value was extremely high:
-
+```
 p ≈ 0.99
-
+```
 
 ➡️ Series is non-stationary
 ➡️ Differencing required:
 
-First difference: d = 1
+* First difference: d = 1
+* Seasonal difference: D = 1 (period = 12)
 
-Seasonal difference: D = 1 (period = 12)
-
-5. Differencing
+## 5. Differencing
 
 Applied:
-
+```
 ts_diff = ts.diff().dropna()
 ts_diff_seasonal = ts_diff.diff(12).dropna()
-
+```
 
 Result: stationarity achieved.
 
