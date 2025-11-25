@@ -117,24 +117,21 @@ Result: stationarity achieved.
 
 We performed a full grid search over:
 
-p, q ∈ {0, 1, 2}
-
-d = 1
-
-P, Q ∈ {0, 1, 2}
-
-D = 1
-
-Seasonal period = 12
+* p, q ∈ {0, 1, 2}
+* d = 1
+* P, Q ∈ {0, 1, 2}
+* D = 1
+* Seasonal period = 12
 
 The optimal model (lowest AIC):
-
+```
 order = (1, 1, 2)
 seasonal_order = (2, 1, 2, 12)
+```
 
 ## 7. Train/Test Split
 
-We reserved the last 24 months as test dataset.
+We reserved the last #24 months# as test dataset.
 
 Trained SARIMA on the historical period and evaluated forecast performance.
 
