@@ -21,6 +21,7 @@ This project is built end-to-end in Python, following real-world best practices 
 
 # Project Structure
 
+'''
 monthly-revenue-forecasting/
 │
 ├── data/
@@ -37,6 +38,7 @@ monthly-revenue-forecasting/
 │   └── sarima_retail_total.pkl   → Trained SARIMA model artifact
 │
 └── README.md
+'''
 
 ---
 
