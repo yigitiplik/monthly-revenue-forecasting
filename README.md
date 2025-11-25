@@ -131,17 +131,15 @@ seasonal_order = (2, 1, 2, 12)
 
 ## 7. Train/Test Split
 
-We reserved the last #24 months# as test dataset.
+We reserved the last 24 months as test dataset.
 
 Trained SARIMA on the historical period and evaluated forecast performance.
 
 Metrics:
 
-MAE
-
-RMSE
-
-MAPE (%)
+* MAE
+* RMSE
+* MAPE (%)
 
 ## 8. Forecast Visualization (Test Period)
 
@@ -156,85 +154,68 @@ SARIMA was retrained on the complete time series.
 Generated and visualized forecast for the next 12 months.
 
 Saved the final chart to:
-
+```
 visuals/monthly_retail_sarima_forecast.png
-
+```
 ---
 
 # Model Artifact
 
 The trained model is saved as:
-
+```
 models/sarima_retail_total.pkl
-
+```
 
 This allows forecasts to be generated without retraining, e.g.:
-
+```
 import joblib
 
 model = joblib.load("models/sarima_retail_total.pkl")
 future = model.get_forecast(steps=12)
 forecast_mean = future.predicted_mean
-
+```
 
 This is a critical component of production-ready pipelines.
 
 📈 Results Summary
 
-Strong upward trend in U.S. retail spending
-
-Clear annual seasonality
-
-SARIMA (1,1,2)(2,1,2,12) fits the dataset well
-
-Provides stable 12-month forward revenue forecast
-
-Ready for downstream reporting & BI dashboards
+* Strong upward trend in U.S. retail spending
+* Clear annual seasonality
+* SARIMA (1,1,2)(2,1,2,12) fits the dataset well
+* Provides stable 12-month forward revenue forecast
+* Ready for downstream reporting & BI dashboards
 
 Final output figure:
 
 📍 visuals/monthly_retail_sarima_forecast.png
 
-💡 Business Value
+# Business Value
 
 This forecasting pipeline helps organizations:
 
-Plan future revenue
-
-Manage inventory with seasonal expectations
-
-Anticipate demand fluctuations
-
-Build data-driven financial strategies
-
-Detect outliers & structural changes in consumer behavior
+* Plan future revenue
+* Manage inventory with seasonal expectations
+* Anticipate demand fluctuations
+* Build data-driven financial strategies
+* Detect outliers & structural changes in consumer behavior
 
 🛠️ Technologies Used
 
-Python
-
-Pandas
-
-Matplotlib
-
-Statsmodels (SARIMA, STL)
-
-NumPy
-
-Joblib
+* Python
+* Pandas
+* Matplotlib
+* Statsmodels (SARIMA, STL)
+* NumPy
+* Joblib
 
 🧠 Future Improvements
 
-Include exogenous variables (multivariate model)
+* Include exogenous variables (multivariate model)
+* Compare with Prophet, ETS, and LSTM
+* Implement model retraining automation
+* Deploy model behind API (FastAPI)
+* Create dashboard using Streamlit
 
-Compare with Prophet, ETS, and LSTM
-
-Implement model retraining automation
-
-Deploy model behind API (FastAPI)
-
-Create dashboard using Streamlit
-
-🎉 Project Status: Completed
+# Project Status: Completed
 
 This repository contains a fully functional forecasting pipeline with reproducible code, stored model artifacts, and production-ready structure.
