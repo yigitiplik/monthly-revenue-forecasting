@@ -154,9 +154,9 @@ SARIMA was retrained on the complete time series.
 Generated and visualized forecast for the next 12 months.
 
 Saved the final chart to:
-```
-visuals/monthly_retail_sarima_forecast.png
-```
+
+![Monthly Retail Sales Forecast](visuals/monthly_retail_sarima_forecast.png)
+
 ---
 
 # Model Artifact
