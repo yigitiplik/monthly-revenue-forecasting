@@ -98,8 +98,7 @@ ADF p-value was extremely high:
 p ≈ 0.99
 ```
 
-➡️ Series is non-stationary
-➡️ Differencing required:
+Series is non-stationary. Differencing required:
 
 * First difference: d = 1
 * Seasonal difference: D = 1 (period = 12)
@@ -114,7 +113,7 @@ ts_diff_seasonal = ts_diff.diff(12).dropna()
 
 Result: stationarity achieved.
 
-6. SARIMA Hyperparameter Search (AIC Grid Search)
+## 6. SARIMA Hyperparameter Search (AIC Grid Search)
 
 We performed a full grid search over:
 
@@ -133,7 +132,7 @@ The optimal model (lowest AIC):
 order = (1, 1, 2)
 seasonal_order = (2, 1, 2, 12)
 
-7. Train/Test Split
+## 7. Train/Test Split
 
 We reserved the last 24 months as test dataset.
 
@@ -147,15 +146,15 @@ RMSE
 
 MAPE (%)
 
-8. Forecast Visualization (Test Period)
+## 8. Forecast Visualization (Test Period)
 
 Model forecasts were overlapped with actual values to inspect structural accuracy.
 
-9. Final Model Training (Full Dataset)
+## 9. Final Model Training (Full Dataset)
 
 SARIMA was retrained on the complete time series.
 
-10. Future Forecast (12 Months)
+## 10. Future Forecast (12 Months)
 
 Generated and visualized forecast for the next 12 months.
 
@@ -163,7 +162,9 @@ Saved the final chart to:
 
 visuals/monthly_retail_sarima_forecast.png
 
-🤖 Model Artifact
+---
+
+# Model Artifact
 
 The trained model is saved as:
 
