@@ -1,27 +1,26 @@
-# 🌟 Monthly Revenue Forecasting — Time Series SARIMA Model (Python)
+# Monthly Revenue Forecasting — Time Series SARIMA Model (Python)
 
-This project performs **time series forecasting** on monthly U.S. retail sales data using a **SARIMA** model.  
-The goal is to analyze long-term trends, seasonality patterns, and generate a **12-month future forecast** of retail revenue.
+This project performs time series forecasting on monthly U.S. retail sales data using a SARIMA model.
+The goal is to analyze long-term trends, seasonality patterns, and generate a 12-month future forecast of retail revenue.
 
 The pipeline includes:
 
-- Data cleaning & preprocessing  
-- Exploratory time-series analysis  
-- STL decomposition  
-- Stationarity testing (ADF)  
-- SARIMA hyperparameter search (AIC-based)  
-- Train/Test evaluation  
-- Final model training & 12-month forecast  
-- Saving & loading a trained model artifact  
-- Exporting forecast visualizations  
+* Data cleaning & preprocessing
+* Exploratory time-series analysis
+* STL decomposition
+* Stationarity testing (ADF)
+* SARIMA hyperparameter search (AIC-based)
+* Train/Test evaluation
+* Final model training & 12-month forecast
+* Saving & loading a trained model artifact
+* Exporting forecast visualizations
 
-This project is built end-to-end in **Python**, following real-world best practices for forecasting workflows.
+This project is built end-to-end in Python, following real-world best practices for forecasting workflows.
 
 ---
 
-## 📂 Project Structure
+# Project Structure
 
-```text
 monthly-revenue-forecasting/
 │
 ├── data/
@@ -39,12 +38,14 @@ monthly-revenue-forecasting/
 │
 └── README.md
 
-Dataset Description
+---
+
+# Dataset Description
 
 The dataset contains monthly U.S. retail sales with multiple business categories.
 For this project, we extract:
 
-➡️ Retail Sales, Total
+➡️ Retail Sales, Total (Seasonally Adjusted)
 
 because it provides:
 
@@ -63,68 +64,61 @@ value	Total monthly sales (Millions USD)
 🚀 Project Workflow
 1. Load & Clean Data
 
-Import raw CSV from data/raw/
+Imported CSV from data/raw/
 
-Filter to "Retail sales, total"
+Filtered to "Retail sales, total"
 
-Convert month to datetime
+Converted month column into datetime
 
-Enforce monthly frequency:
+Enforced monthly frequency:
 
 ts = df_total.set_index("month").asfreq("MS")
 
 2. Exploratory Time-Series Analysis
 
-Visualize raw trend
+Raw trend visualization
 
-Inspect seasonal cycles
+Checked for seasonal cycles
 
-Identify structural breaks (e.g., COVID-19 shock)
+Identified structural breaks (e.g., COVID-19)
 
 3. STL Decomposition (Trend + Seasonality + Residual)
 
-We use STL to decompose the series into:
+We used STL to separate components:
 
-Long-term trend
+Long-term economic trend
 
-Yearly seasonality (12-month cycle)
+Strong yearly seasonality (12-month cycle)
 
-Residual (noise / irregular shocks)
-
-This helps us visually confirm strong seasonal structure and trend.
+Irregular noise spikes (especially 2020)
 
 4. Stationarity Check (ADF Test)
 
-We perform an Augmented Dickey–Fuller test.
+ADF p-value was extremely high:
 
-Result:
+p ≈ 0.99
 
-ADF p-value ≈ 0.99
 
-This indicates the series is non-stationary, mainly due to trend and seasonality.
+➡️ Series is non-stationary
+➡️ Differencing required:
 
-Therefore, we apply:
+First difference: d = 1
 
-First-order differencing: d = 1
-
-Seasonal differencing with 12-month period: D = 1
+Seasonal difference: D = 1 (period = 12)
 
 5. Differencing
+
+Applied:
+
 ts_diff = ts.diff().dropna()
 ts_diff_seasonal = ts_diff.diff(12).dropna()
 
 
-After differencing:
-
-The series fluctuates around zero
-
-Seasonality and trend are much weaker
-
-The series is suitable for SARIMA modeling
+Result: stationarity achieved.
 
 6. SARIMA Hyperparameter Search (AIC Grid Search)
 
-We perform an AIC-based grid search over:
+We performed a full grid search over:
 
 p, q ∈ {0, 1, 2}
 
@@ -134,110 +128,90 @@ P, Q ∈ {0, 1, 2}
 
 D = 1
 
-Seasonal period s = 12
+Seasonal period = 12
 
-The best model (lowest AIC):
+The optimal model (lowest AIC):
 
 order = (1, 1, 2)
 seasonal_order = (2, 1, 2, 12)
 
 7. Train/Test Split
 
-Reserve the last 24 months as a test set
+We reserved the last 24 months as test dataset.
 
-Train SARIMA on the remaining historical data
+Trained SARIMA on the historical period and evaluated forecast performance.
 
-We evaluate forecast accuracy using:
+Metrics:
 
-MAE (Mean Absolute Error)
+MAE
 
-RMSE (Root Mean Squared Error)
+RMSE
 
-MAPE (Mean Absolute Percentage Error)
+MAPE (%)
 
-8. Forecast Evaluation (Test Period)
+8. Forecast Visualization (Test Period)
 
-We compare:
-
-Actual test values vs
-
-SARIMA forecast for the same period
-
-This is visualized in the notebook to visually assess how well the model tracks real data.
+Model forecasts were overlapped with actual values to inspect structural accuracy.
 
 9. Final Model Training (Full Dataset)
 
-After validating the configuration, we retrain SARIMA on the full time series to leverage all available historical data.
+SARIMA was retrained on the complete time series.
 
 10. Future Forecast (12 Months)
 
-We generate a 12-month ahead forecast using the final model, with confidence intervals.
+Generated and visualized forecast for the next 12 months.
 
-The resulting figure is saved to:
+Saved the final chart to:
 
 visuals/monthly_retail_sarima_forecast.png
 
-
-This plot is the main output visualization of the project.
-
 🤖 Model Artifact
 
-The trained SARIMA model is saved as a reusable artifact:
+The trained model is saved as:
 
 models/sarima_retail_total.pkl
 
 
-This allows us (or other users) to load the model and generate new forecasts without retraining.
-
-Example usage:
+This allows forecasts to be generated without retraining, e.g.:
 
 import joblib
-import pandas as pd
 
-# Load processed time series
-ts = pd.read_csv("data/processed/monthly_revenue_retail_total.csv",
-                 parse_dates=["month"],
-                 index_col="month")
-ts = ts.asfreq("MS")
-
-# Load trained SARIMA model
 model = joblib.load("models/sarima_retail_total.pkl")
+future = model.get_forecast(steps=12)
+forecast_mean = future.predicted_mean
 
-# Generate a 12-month forecast
-n_future = 12
-forecast_obj = model.get_forecast(steps=n_future)
-forecast_mean = forecast_obj.predicted_mean
-forecast_ci = forecast_obj.conf_int()
+
+This is a critical component of production-ready pipelines.
 
 📈 Results Summary
 
-Clear upward long-term trend in U.S. retail spending
+Strong upward trend in U.S. retail spending
 
-Strong annual seasonality (12-month patterns)
+Clear annual seasonality
 
-SARIMA (1, 1, 2) × (2, 1, 2, 12) captures the dynamics well
+SARIMA (1,1,2)(2,1,2,12) fits the dataset well
 
-Provides a realistic 12-month forward forecast of total retail sales
+Provides stable 12-month forward revenue forecast
 
-Ready to be integrated into reporting, dashboards, or decision-making workflows
+Ready for downstream reporting & BI dashboards
 
-Final forecast chart:
+Final output figure:
 
-visuals/monthly_retail_sarima_forecast.png
+📍 visuals/monthly_retail_sarima_forecast.png
 
 💡 Business Value
 
 This forecasting pipeline helps organizations:
 
-Plan future revenue and budgets
+Plan future revenue
 
-Manage inventory and supply more efficiently
+Manage inventory with seasonal expectations
 
-Anticipate periods of high or low demand
+Anticipate demand fluctuations
 
-Understand structural breaks (e.g., crisis periods)
+Build data-driven financial strategies
 
-Design data-driven sales and marketing strategies
+Detect outliers & structural changes in consumer behavior
 
 🛠️ Technologies Used
 
@@ -245,37 +219,26 @@ Python
 
 Pandas
 
-NumPy
-
 Matplotlib
 
-Statsmodels (STL decomposition, SARIMA)
+Statsmodels (SARIMA, STL)
 
-Joblib (model persistence)
+NumPy
 
-Jupyter Notebook
+Joblib
 
-🧠 Possible Future Improvements
+🧠 Future Improvements
 
-Add exogenous variables (SARIMAX): macroeconomic indicators, holidays, inflation, etc.
+Include exogenous variables (multivariate model)
 
-Compare SARIMA with Prophet, ETS, or XGBoost/LightGBM models
+Compare with Prophet, ETS, and LSTM
 
-Automate model retraining and backtesting
+Implement model retraining automation
 
-Deploy the model via FastAPI or Flask
+Deploy model behind API (FastAPI)
 
-Build a simple BI/dashboard using Streamlit or similar tools
+Create dashboard using Streamlit
 
-🎉 Project Status
+🎉 Project Status: Completed
 
-✅ Completed – ready as a portfolio project.
-The repository contains:
-
-A reproducible end-to-end forecasting pipeline
-
-Clean project structure
-
-Trained SARIMA model artifact
-
-Visual outputs for communication and reporting.
+This repository contains a fully functional forecasting pipeline with reproducible code, stored model artifacts, and production-ready structure.
